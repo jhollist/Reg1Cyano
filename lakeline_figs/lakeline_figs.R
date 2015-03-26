@@ -151,4 +151,16 @@ dat_clean %>% group_by(Parameter) %>% summarize(mean(Value,na.rm=T))
 #  geom_errorbar(limits_mdn_iqr, position=dodge, width=0.25)
 #state_bar_mdn_iqr
 
-  
+dat_clean %>% 
+  group_by(Parameter) %>%
+  summarize(mean(Value,na.rm=T),
+            median(Value,na.rm=T),
+            max(Value,na.rm=T))
+
+dat_clean2<-dat_clean %>% filter(Value < 10000)
+
+dat_clean2 %>% 
+  group_by(Parameter) %>%
+  summarize(mean(Value,na.rm=T),
+            median(Value,na.rm=T),
+            max(Value,na.rm=T))  
