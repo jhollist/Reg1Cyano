@@ -125,13 +125,20 @@ state_bar_mdn_boot
 ggsave("lakeline_figs/state_summ_bar.tiff", state_bar_mdn_boot,dpi=150,height=4,width=6)
 ggsave("lakeline_figs/state_summ_bar.jpg", state_bar_mdn_boot,dpi=300,height=4,width=6)
 
-dat_clean %>% group_by(Parameter) %>% summarize(median(Value,na.rm=T))
-dat_clean %>% group_by(Parameter) %>% summarize(mean(Value,na.rm=T))
-dat_clean %>% group_by(Parameter) %>% summarize(sd(Value,na.rm=T))
-dat_clean %>% group_by(Parameter) %>% summarize(min(Value,na.rm=T))
-dat_clean %>% group_by(Parameter) %>% summarize(max(Value,na.rm=T))
-dat_clean %>% group_by(Parameter) %>% summarize(quantile(Value,na.rm=T,c(0.025)))
-dat_clean %>% group_by(Parameter) %>% summarize(quantile(Value,na.rm=T,c(0.975)))
+dat_clean_nomax <- dat_clean[dat_clean$Value < 16000,]
+dat_clean_nomax <- dat_clean_nomax[dat_clean_nomax$Value != 71.370,]
+dat_clean_nomax <- dat_clean_nomax[!is.na(dat_clean_nomax$Parameter),]
+
+dat_clean_nomax %>% group_by(Parameter) %>% summarize(median(Value,na.rm=T))
+dat_clean_nomax %>% group_by(Parameter) %>% summarize(mean(Value,na.rm=T))
+dat_clean_nomax %>% group_by(Parameter) %>% summarize(sd(Value,na.rm=T))
+dat_clean_nomax %>% group_by(Parameter) %>% summarize(min(Value,na.rm=T))
+dat_clean_nomax %>% group_by(Parameter) %>% summarize(max(Value,na.rm=T))
+dat_clean_nomax %>% group_by(Parameter) %>% summarize(quantile(Value,na.rm=T,c(0.025)))
+dat_clean_nomax %>% group_by(Parameter) %>% summarize(quantile(Value,na.rm=T,c(0.975)))
+
+dat_parm_value<-dat_clean_nomax %>% select(Parameter,Value)
+write.csv(dat_parm_value, "param_value.csv")
 
 #dat_clean %>%
 #  select(State,Parameter,Value,Units)%>%
