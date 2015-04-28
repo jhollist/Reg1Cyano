@@ -127,6 +127,12 @@ ggsave("lakeline_figs/state_summ_bar.jpg", state_bar_mdn_boot,dpi=300,height=4,w
 
 dat_clean %>% group_by(Parameter) %>% summarize(median(Value,na.rm=T))
 dat_clean %>% group_by(Parameter) %>% summarize(mean(Value,na.rm=T))
+dat_clean %>% group_by(Parameter) %>% summarize(sd(Value,na.rm=T))
+dat_clean %>% group_by(Parameter) %>% summarize(min(Value,na.rm=T))
+dat_clean %>% group_by(Parameter) %>% summarize(max(Value,na.rm=T))
+dat_clean %>% group_by(Parameter) %>% summarize(quantile(Value,na.rm=T,c(0.025)))
+dat_clean %>% group_by(Parameter) %>% summarize(quantile(Value,na.rm=T,c(0.975)))
+
 #dat_clean %>%
 #  select(State,Parameter,Value,Units)%>%
 #  filter(Parameter=="Phycocyanin")%>%
